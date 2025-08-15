@@ -6,7 +6,7 @@ cryptography==45.0.6
 django==5.2.5
 django-allauth==65.11.0
 idna==3.10
-mysqlclient==2.2.7
+mysqlclient==2.1.1 
 pillow==11.3.0
 pycparser==2.22
 pyjwt==2.10.1
@@ -16,3 +16,4 @@ tzdata==2025.2
 urllib3==2.5.0
 waitress==3.0.2
 gunicorn
+
