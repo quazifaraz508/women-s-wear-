@@ -89,10 +89,10 @@ WSGI_APPLICATION = 'Elegence_wear_final.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nazema_shop',
-        'USER': 'nazema_user',
-        'PASSWORD': 'farazfaraz',
-        'HOST': 'localhost',
+        'NAME': 'shop',
+        'USER': 'saad',
+        'PASSWORD': 'rU4-jT3_bJ7-cG7+wA3+',
+        'HOST': 'shop-vem7n-mysql.shop-vem7n.svc.cluster.local',
         'PORT': '3306',
     }
 }
