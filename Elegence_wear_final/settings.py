@@ -92,8 +92,8 @@ DATABASES = {
         'NAME': 'shop',
         'USER': 'saad',
         'PASSWORD': 'rU4-jT3_bJ7-cG7+wA3+',
-        'HOST': 'shop-vem7n-mysql.shop-vem7n.svc.cluster.local',
-        'PORT': '3306',
+        'HOST': 'asia-south1-001.proxy.kinsta.app',
+        'PORT': '30459',
     }
 }
 
