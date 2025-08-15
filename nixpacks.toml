@@ -3,11 +3,11 @@ packages = [
     "python3",
     "gcc",
     "python3-dev",
-    "libmysqlclient-dev",
-    "libjpeg-dev",
-    "zlib1g-dev",
-    "libpng-dev",
-    "build-essential"
+    "libmysqlclient-dev",   # critical for mysqlclient
+    "pkg-config",           # needed for pkg-config detection
+    "build-essential",
+    "libssl-dev",
+    "libffi-dev
 ]
 
 [phases.install]
