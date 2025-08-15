@@ -1,0 +1,421 @@
+{% load static %}
+
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center relative">
+    <!-- Brand -->
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-pink-600 tracking-wide z-50">
+      Elegance <span class="text-gray-700">Wear</span>
+    </h1>
+
+    <!-- Hamburger Button (Mobile Only) -->
+    <div class="md:hidden z-50">
+      <button id="mobileMenuButton" class="text-gray-700 focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Desktop Navigation + Cart -->
+    <div class="hidden md:flex items-center space-x-6 z-50">
+      <nav class="space-x-6 text-sm font-semibold">
+        <a href="{% url 'product_list' %}" class="hover:text-pink-600 transition">Home</a>
+        <a href="{% url 'favorite_products' %}" class="hover:text-pink-600 transition">Favorites</a>
+        <a href="{% url 'collections' %}" class="hover:text-pink-600 transition">Collections</a>
+        <a href="{% url 'contact' %}" class="hover:text-pink-600 transition">Contact</a>
+        
+      <!-- Desktop Cart -->
+      <div class="relative inline-block">
+        <dotlottie-player
+          id="cartIconDesktop"
+          src="https://lottie.host/8281b0ca-36d9-4fd5-b3eb-e2552ac9838c/OcTLnCj507.lottie"
+          background="transparent"
+          speed="1"
+          style="width: 48px; height: 48px; cursor: pointer;"
+          loop
+          autoplay
+        ></dotlottie-player>
+
+        <!-- Desktop Cart Dropdown -->
+        <div id="cartDetailsDesktop"
+             class="absolute top-14 right-0 w-72 p-4 bg-white shadow-lg border border-gray-300 rounded-lg hidden z-50">
+          <h3 class="text-lg font-semibold mb-2">Cart Summary</h3>
+          <p class="text-gray-700">Items in Cart: <span class="cartCount">0</span></p>
+          <ul class="cartItemsList mb-2 max-h-40 overflow-y-auto"></ul>
+          <p class="font-semibold">Total: ₹<span class="cartTotal">0.00</span></p>
+          <button class="closeCart mt-3 text-sm text-blue-500 hover:underline">Close</button>
+        </div>
+      </div>
+        <!-- Desktop User Dropdown -->
+        {% if user.is_authenticated %}
+        <div class="relative inline-block">
+          <button id="userMenuButton" class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 w-10 h-10 rounded-full shadow-sm text-sm font-semibold uppercase">
+            <span class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 w-10 h-10 rounded-full shadow-sm text-sm font-semibold uppercase">
+              {{ user.first_name|default:user.email|slice:":2" }}
+            </span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+        
+          <!-- Dropdown -->
+          <div id="userMenuDropdown" class="absolute top-12 right-0 w-64 p-4 bg-white shadow-lg border border-gray-200 rounded-2xl hidden z-50">
+            <form id="updateUserForm" method="POST" class="space-y-3">
+              {% csrf_token %}
+              <div>
+                <label class="text-sm font-medium">Name</label>
+                <input type="text" name="first_name" value="{{ user.first_name }}"
+                       class="w-full border border-gray-300 rounded-full px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400">
+              </div>
+              <div>
+                <label class="text-sm font-medium">Phone</label>
+                <input type="text" name="phone_number" value="{{ user.phone_number|default:'' }}"
+                       class="w-full border border-gray-300 rounded-full px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400">
+              </div>
+              <div>
+                <label class="text-sm font-medium">Email</label>
+                <input type="text" name="phone_number" value="{{ user.email|default:'' }}"
+                       class="w-full border border-gray-300 rounded-full px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400">
+              
+              </div>
+              <button type="submit"
+                      class="w-full bg-pink-600 hover:bg-pink-700 text-white text-sm px-4 py-2 rounded-full transition">
+                Save
+              </button>
+            </form>
+            <br>
+          
+                <div x-data="{ showLogoutConfirm: false }" class="relative inline-block">
+                  <button 
+                    @click="showLogoutConfirm = true" 
+                    class="bg-red-600 border border-slate-700 hover:bg-slate-700 text-slate-300 font-semibold px-4 py-1 rounded-md shadow text-white text-sm  transition-colors">
+                    Logout
+                  </button>
+                
+                  <!-- Confirmation Box -->
+                  <div 
+                    x-show="showLogoutConfirm" 
+                    x-transition 
+                    class="absolute z-50 top-10 right-0 bg-slate-800 border border-slate-700 rounded-lg shadow-lg p-4 w-64" 
+                    x-cloak>
+                    <p class="text-sm text-black mb-4">Are you sure you want to logout?</p>
+                    <div class="flex justify-end space-x-2">
+                      <button @click="showLogoutConfirm = false" class="text-slate-300 hover:text-pink-600 text-sm">No</button>
+                      <a href="{% url 'logout' %}" class="bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-3 py-1 rounded-md">Yes</a>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+        {% else %}
+                  <a href="{% url 'login' %}" 
+                     class="bg-pink-600 hover:bg-pink-700 text-white font-semibold px-4 py-1 rounded-md shadow text-sm transition-colors">
+                     Login
+                  </a>
+        {% endif %}
+          </div>
+        </div>
+      </nav>
+
+
+  <!-- Mobile Menu -->
+  <div 
+    id="mobileMenu"
+    class="absolute top-16 right-4 w-56 bg-white border border-gray-300 rounded-lg shadow-lg p-4 space-y-3 text-sm font-medium text-gray-800 hidden md:hidden z-40">
+ 
+    {% if user.is_authenticated %}
+      <div class="relative">
+        <button id="userMenuButtonMobile" 
+                class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 w-10 h-10 rounded-full shadow-sm text-sm font-semibold uppercase">
+          {{ user.first_name|default:user.email|slice:":2" }}
+          <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+      
+        <!-- Mobile User Dropdown -->
+        <div id="userMenuDropdownMobile" 
+             class="absolute top-12 right-0 w-64 p-4 bg-white shadow-lg border border-gray-200 rounded-2xl hidden z-50">
+          <form id="updateUserFormMobile" method="POST" class="space-y-3">
+            {% csrf_token %}
+            <div>
+              <label class="text-sm font-medium">Name</label>
+              <input type="text" name="first_name" value="{{ user.first_name }}"
+                     class="w-full border border-gray-300 rounded-full px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400">
+            </div>
+            <div>
+              <label class="text-sm font-medium">Phone</label>
+              <input type="text" name="phone_number" value="{{ user.phone_number|default:'' }}"
+                     class="w-full border border-gray-300 rounded-full px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-400">
+            </div>
+            <div>
+              <label class="text-sm font-medium">Email</label>
+              <input type="text" value="{{ user.email|default:'' }}" readonly
+                     class="w-full border border-gray-300 rounded-full px-3 py-2 text-sm bg-gray-100">
+            </div>
+            <button type="submit"
+                    class="w-full bg-pink-600 hover:bg-pink-700 text-white text-sm px-4 py-2 rounded-full transition">
+              Save
+            </button>
+          </form>
+          <br>
+          <div x-data="{ showLogoutConfirm: false }">
+            <button @click="showLogoutConfirm = true"
+                    class="bg-red-600 hover:bg-red-700 text-white text-sm px-4 py-1 rounded-md shadow">
+              Logout
+            </button>
+            <div x-show="showLogoutConfirm" x-transition class="mt-3 p-3 bg-gray-100 border rounded">
+              <p class="text-sm mb-3">Are you sure you want to logout?</p>
+              <div class="flex justify-end gap-2">
+                <button @click="showLogoutConfirm = false" class="text-gray-600">No</button>
+                <a href="{% url 'logout' %}" class="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded-md">Yes</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    
+    <a href="{% url 'product_list' %}" class="block hover:text-pink-600 transition">Home</a>
+    <a href="{% url 'favorite_products' %}" class="block hover:text-pink-600 transition">Favorites</a>
+    <a href="{% url 'collections' %}" class="block hover:text-pink-600 transition">Collections</a>
+    <a href="{% url 'contact' %}" class="block hover:text-pink-600 transition">Contact</a>
+
+    <!-- Mobile Cart -->
+    <div class="relative inline-block">
+      <dotlottie-player
+        id="cartIconMobile"
+        src="https://lottie.host/8281b0ca-36d9-4fd5-b3eb-e2552ac9838c/OcTLnCj507.lottie"
+        background="transparent"
+        speed="1"
+        style="width: 48px; height: 48px; cursor: pointer;"
+        loop
+        autoplay
+      ></dotlottie-player>
+
+      <!-- Mobile Cart Dropdown -->
+      <div id="cartDetailsMobile"
+           class="absolute top-14 right-0 w-72 p-4 bg-white shadow-lg border border-gray-300 rounded-lg hidden z-50">
+        <h3 class="text-lg font-semibold mb-2">Cart Summary</h3>
+        <p class="text-gray-700">Items in Cart: <span class="cartCount">0</span></p>
+        <ul class="cartItemsList mb-2 max-h-40 overflow-y-auto"></ul>
+        <p class="font-semibold">Total: ₹<span class="cartTotal">0.00</span></p>
+        <button class="closeCart mt-3 text-sm text-blue-500 hover:underline">Close</button>
+      </div>
+    </div>
+<br>
+    {% if  not user.is_authenticated  %}
+                  <a href="{% url 'login' %}" 
+                     class="bg-pink-600 hover:bg-pink-700 text-white font-semibold px-4 py-1 rounded-md shadow text-sm transition-colors">
+                     Login
+                  </a>
+        {% endif %}
+  </div>
+</header>
+
+<script>
+function getCSRFToken() {
+  let cookieValue = null;
+  const name = 'csrftoken';
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+function toggleCartDetails(show, dropdownId) {
+  const cartDropdown = document.getElementById(dropdownId);
+  if (show) {
+    fetch("{% url 'get_cart_data' %}")
+      .then(res => res.json())
+      .then(data => {
+        cartDropdown.querySelector(".cartCount").innerText = data.cart_count;
+        cartDropdown.querySelector(".cartTotal").innerText = data.cart_total.toFixed(2);
+        const list = cartDropdown.querySelector(".cartItemsList");
+        list.innerHTML = "";
+        data.cart_items.forEach(item => {
+          const li = document.createElement("li");
+          li.classList.add("flex", "justify-between", "items-center", "py-1");
+          li.innerHTML = `
+            <span>${item.name}</span>
+            <div class="flex items-center space-x-2">
+              <button class="px-2 bg-gray-200 rounded" onclick="updateCartItem(${item.id}, 'decrease', '${dropdownId}')">-</button>
+              <span>${item.quantity}</span>
+              <button class="px-2 bg-gray-200 rounded" onclick="updateCartItem(${item.id}, 'increase', '${dropdownId}')">+</button>
+              <button class="text-red-500 ml-2" onclick="removeCartItem(${item.id}, '${dropdownId}')">🗑️</button>
+            </div>
+          `;
+          list.appendChild(li);
+        });
+        cartDropdown.classList.remove("hidden");
+      });
+  } else {
+    cartDropdown.classList.add("hidden");
+  }
+}
+
+function updateCartItem(itemId, action, dropdownId) {
+  fetch(`/cart/update/${itemId}/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRFToken": getCSRFToken() },
+    body: JSON.stringify({ action })
+  })
+  .then(res => res.json())
+  .then(data => renderCartDropdown(data, dropdownId));
+}
+
+function removeCartItem(itemId, dropdownId) {
+  fetch(`/cart/remove/${itemId}/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRFToken": getCSRFToken() }
+  })
+  .then(res => res.json())
+  .then(data => renderCartDropdown(data, dropdownId));
+}
+
+function renderCartDropdown(data, dropdownId) {
+  const cartDropdown = document.getElementById(dropdownId);
+  cartDropdown.querySelector(".cartCount").innerText = data.cart_count;
+  cartDropdown.querySelector(".cartTotal").innerText = data.cart_total.toFixed(2);
+  const list = cartDropdown.querySelector(".cartItemsList");
+  list.innerHTML = "";
+  data.cart_items.forEach(item => {
+    const li = document.createElement("li");
+    li.classList.add("flex", "justify-between", "items-center", "py-1");
+    li.innerHTML = `
+      <span>${item.name}</span>
+      <div class="flex items-center space-x-2">
+        <button class="px-2 bg-gray-200 rounded" onclick="updateCartItem(${item.id}, 'decrease', '${dropdownId}')">-</button>
+        <span>${item.quantity}</span>
+        <button class="px-2 bg-gray-200 rounded" onclick="updateCartItem(${item.id}, 'increase', '${dropdownId}')">+</button>
+        <button class="text-red-500 ml-2" onclick="removeCartItem(${item.id}, '${dropdownId}')">🗑️</button>
+      </div>
+    `;
+    list.appendChild(li);
+  });
+  cartDropdown.classList.remove("hidden");
+}
+
+// Event listeners for cart icons
+document.getElementById("cartIconDesktop")?.addEventListener("click", e => {
+  e.stopPropagation();
+  toggleCartDetails(true, "cartDetailsDesktop");
+});
+document.getElementById("cartIconMobile")?.addEventListener("click", e => {
+  e.stopPropagation();
+  toggleCartDetails(true, "cartDetailsMobile");
+});
+
+// Close buttons
+document.querySelectorAll(".closeCart").forEach(btn => {
+  btn.addEventListener("click", function() {
+    this.closest("div[id^='cartDetails']").classList.add("hidden");
+  });
+});
+
+// Mobile menu toggle
+const mobileMenuButton = document.getElementById("mobileMenuButton");
+const mobileMenu = document.getElementById("mobileMenu");
+mobileMenuButton?.addEventListener("click", e => {
+  e.stopPropagation();
+  mobileMenu.classList.toggle("hidden");
+});
+
+// Global click listener
+document.addEventListener("click", e => {
+  ["Desktop", "Mobile"].forEach(view => {
+    const details = document.getElementById(`cartDetails${view}`);
+    const icon = document.getElementById(`cartIcon${view}`);
+    if (details && icon && !details.contains(e.target) && !icon.contains(e.target)) {
+      details.classList.add("hidden");
+    }
+  });
+  if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+    mobileMenu.classList.add("hidden");
+  }
+});
+
+// Toggle user dropdown
+const userMenuButton = document.getElementById("userMenuButton");
+const userMenuDropdown = document.getElementById("userMenuDropdown");
+
+userMenuButton?.addEventListener("click", e => {
+  e.stopPropagation();
+  userMenuDropdown.classList.toggle("hidden");
+});
+
+// Hide on outside click
+document.addEventListener("click", e => {
+  if (!userMenuDropdown?.contains(e.target) && !userMenuButton?.contains(e.target)) {
+    userMenuDropdown?.classList.add("hidden");
+  }
+});
+
+// Handle profile update via AJAX
+document.getElementById("updateUserForm")?.addEventListener("submit", function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  fetch("{% url 'update_user_profile' %}", {
+    method: "POST",
+    headers: { "X-CSRFToken": getCSRFToken() },
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert("Profile updated!");
+      location.reload();
+    } else {
+      alert("Error updating profile");
+    }
+  });
+});
+
+// Toggle mobile user dropdown
+const userMenuButtonMobile = document.getElementById("userMenuButtonMobile");
+const userMenuDropdownMobile = document.getElementById("userMenuDropdownMobile");
+
+userMenuButtonMobile?.addEventListener("click", e => {
+  e.stopPropagation();
+  userMenuDropdownMobile.classList.toggle("hidden");
+});
+
+// Close on outside click
+document.addEventListener("click", e => {
+  if (!userMenuDropdownMobile?.contains(e.target) && !userMenuButtonMobile?.contains(e.target)) {
+    userMenuDropdownMobile?.classList.add("hidden");
+  }
+});
+
+// Handle mobile profile update via AJAX
+document.getElementById("updateUserFormMobile")?.addEventListener("submit", function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  fetch("{% url 'update_user_profile' %}", {
+    method: "POST",
+    headers: { "X-CSRFToken": getCSRFToken() },
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert("Profile updated!");
+      location.reload();
+    } else {
+      alert("Error updating profile");
+    }
+  });
+});
+
+
+</script>

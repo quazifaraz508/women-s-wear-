@@ -1,0 +1,149 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="bg-slate-50">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+
+    <div class="text-center bg-pink-100 rounded-2xl p-8 md:p-12 mb-12 shadow-sm">
+      <h1 class="text-4xl md:text-5xl font-bold text-white-800 tracking-tight">This Page is Under Construction - Stay Tuned!!!!</h1>
+      <br>
+      <h3 class="text-4xl md:text-5xl font-bold text-pink-800 tracking-tight">Summer Collection</h3>
+      <p class="mt-4 text-lg text-pink-700 max-w-2xl mx-auto">
+        Discover our latest arrivals. Fresh styles and vibrant colors to make your summer unforgettable.
+      </p>
+    </div>
+
+    <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+      <p class="text-slate-600">Showing <span class="font-semibold">12</span> of <span class="font-semibold">48</span> products</p>
+      
+      <div class="flex items-center gap-4">
+        <label for="sort" class="text-sm font-medium text-slate-700">Sort by:</label>
+        <select id="sort" name="sort" class="rounded-lg border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 text-sm">
+          <option>Newest</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Best Selling</option>
+        </select>
+      </div>
+    </div>
+
+      </div>
+    -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+      
+      <div class="group relative bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden transition-all hover:shadow-lg">
+        <div class="aspect-w-1 aspect-h-1">
+          <img src="https://picsum.photos/seed/dress1/400/400" alt="Product Name" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-md font-semibold text-slate-800">
+            <a href="#" class="hover:text-pink-600">
+              Floral Sundress
+              <span class="absolute inset-0"></span>
+            </a>
+          </h3>
+          <p class="mt-2 text-lg font-bold text-pink-600">₹1,299</p>
+        </div>
+        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center">
+            <button class="mb-4 bg-white text-pink-600 text-sm font-bold px-4 py-2 rounded-full shadow-md hover:bg-pink-50">Quick View</button>
+        </div>
+        <span class="absolute top-3 left-3 bg-pink-600 text-white text-xs font-bold px-2 py-1 rounded-full">NEW</span>
+      </div>
+
+      <div class="group relative bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden transition-all hover:shadow-lg">
+        <div class="aspect-w-1 aspect-h-1">
+          <img src="https://picsum.photos/seed/dress2/400/400" alt="Product Name" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-md font-semibold text-slate-800">
+            <a href="#" class="hover:text-pink-600">
+              Linen Jumpsuit
+              <span class="absolute inset-0"></span>
+            </a>
+          </h3>
+          <p class="mt-2 text-lg font-bold text-pink-600">₹1,899</p>
+        </div>
+        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center">
+            <button class="mb-4 bg-white text-pink-600 text-sm font-bold px-4 py-2 rounded-full shadow-md hover:bg-pink-50">Quick View</button>
+        </div>
+      </div>
+
+      <div class="group relative bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden transition-all hover:shadow-lg">
+        <div class="aspect-w-1 aspect-h-1">
+          <img src="https://picsum.photos/seed/dress3/400/400" alt="Product Name" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-md font-semibold text-slate-800">
+            <a href="#" class="hover:text-pink-600">
+              Classic White Tee
+              <span class="absolute inset-0"></span>
+            </a>
+          </h3>
+          <p class="mt-2 text-lg font-bold text-pink-600">₹799</p>
+        </div>
+        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center">
+            <button class="mb-4 bg-white text-pink-600 text-sm font-bold px-4 py-2 rounded-full shadow-md hover:bg-pink-50">Quick View</button>
+        </div>
+        <span class="absolute top-3 right-3 bg-yellow-400 text-white text-xs font-bold px-2 py-1 rounded-full">SALE</span>
+      </div>
+
+      <div class="group relative bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden transition-all hover:shadow-lg">
+        <div class="aspect-w-1 aspect-h-1">
+          <img src="https://picsum.photos/seed/dress4/400/400" alt="Product Name" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="text-md font-semibold text-slate-800">
+            <a href="#" class="hover:text-pink-600">
+              High-Waist Jeans
+              <span class="absolute inset-0"></span>
+            </a>
+          </h3>
+          <p class="mt-2 text-lg font-bold text-pink-600">₹2,199</p>
+        </div>
+        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center">
+            <button class="mb-4 bg-white text-pink-600 text-sm font-bold px-4 py-2 rounded-full shadow-md hover:bg-pink-50">Quick View</button>
+        </div>
+      </div>
+      
+      <div class="group relative bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden transition-all hover:shadow-lg">
+        <div class="aspect-w-1 aspect-h-1"><img src="https://picsum.photos/seed/dress5/400/400" alt="Product" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"></div>
+        <div class="p-4 text-center"><h3 class="text-md font-semibold text-slate-800"><a href="#" class="hover:text-pink-600">Elegant Maxi Dress<span class="absolute inset-0"></span></a></h3><p class="mt-2 text-lg font-bold text-pink-600">₹2,499</p></div>
+        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center"><button class="mb-4 bg-white text-pink-600 text-sm font-bold px-4 py-2 rounded-full shadow-md hover:bg-pink-50">Quick View</button></div>
+      </div>
+      <div class="group relative bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden transition-all hover:shadow-lg">
+        <div class="aspect-w-1 aspect-h-1"><img src="https://picsum.photos/seed/dress6/400/400" alt="Product" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"></div>
+        <div class="p-4 text-center"><h3 class="text-md font-semibold text-slate-800"><a href="#" class="hover:text-pink-600">Casual Denim Skirt<span class="absolute inset-0"></span></a></h3><p class="mt-2 text-lg font-bold text-pink-600">₹1,499</p></div>
+        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center"><button class="mb-4 bg-white text-pink-600 text-sm font-bold px-4 py-2 rounded-full shadow-md hover:bg-pink-50">Quick View</button></div>
+      </div>
+      <div class="group relative bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden transition-all hover:shadow-lg">
+        <div class="aspect-w-1 aspect-h-1"><img src="https://picsum.photos/seed/dress7/400/400" alt="Product" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"></div>
+        <div class="p-4 text-center"><h3 class="text-md font-semibold text-slate-800"><a href="#" class="hover:text-pink-600">Striped Crop Top<span class="absolute inset-0"></span></a></h3><p class="mt-2 text-lg font-bold text-pink-600">₹899</p></div>
+        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center"><button class="mb-4 bg-white text-pink-600 text-sm font-bold px-4 py-2 rounded-full shadow-md hover:bg-pink-50">Quick View</button></div>
+      </div>
+      <div class="group relative bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden transition-all hover:shadow-lg">
+        <div class="aspect-w-1 aspect-h-1"><img src="https://picsum.photos/seed/dress8/400/400" alt="Product" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"></div>
+        <div class="p-4 text-center"><h3 class="text-md font-semibold text-slate-800"><a href="#" class="hover:text-pink-600">Bohemian Blouse<span class="absolute inset-0"></span></a></h3><p class="mt-2 text-lg font-bold text-pink-600">₹1,799</p></div>
+        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center"><button class="mb-4 bg-white text-pink-600 text-sm font-bold px-4 py-2 rounded-full shadow-md hover:bg-pink-50">Quick View</button></div>
+      </div>
+
+    </div>
+
+    <div class="mt-12 flex justify-center">
+      <nav class="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+          <span>&laquo;</span>
+        </a>
+        <a href="#" aria-current="page" class="relative z-10 inline-flex items-center px-4 py-2 border border-pink-500 bg-pink-50 text-sm font-medium text-pink-600">1</a>
+        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">2</a>
+        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">3</a>
+        <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>
+        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">8</a>
+        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+          <span>&raquo;</span>
+        </a>
+      </nav>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

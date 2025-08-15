@@ -1,0 +1,172 @@
+{% load static %}
+
+<!-- Featured Categories -->
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <h3 class="text-4xl font-bold text-pink-700 mb-12">Explore Our <span class="text-gray-800">Collections</span></h3>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      {% for prod in products %}
+      <div class="bg-white p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition hover:shadow-xl relative">
+
+        <!-- Favorite Heart -->
+        <form method="post" class="favorite-form absolute top-3 right-3" data-id="{{ prod.id }}">
+          {% csrf_token %}
+          <button type="button" class="heart-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition duration-300 ease-in-out"
+                 fill="{% if prod in favorite_products %}red{% else %}gray{% endif %}" viewBox="0 0 24 24">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                       2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
+                       C13.09 3.81 14.76 3 16.5 3
+                       19.58 3 22 5.42 22 8.5
+                       c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          </button>
+        </form>
+        <!-- Product Image -->
+        <a href="{% url 'product_detail' prod.pk %}">
+          {% with first_image=prod.images.first %}
+            {% if first_image %}
+              <img src="{{ first_image.image.url }}" class="rounded-lg mb-4 w-full h-64 object-cover">
+            {% else %}
+              <img src="{% static 'images/default.jpg' %}" class="rounded-lg mb-4 w-full h-64 object-cover">
+            {% endif %}
+          {% endwith %}
+        </a>
+
+        <!-- Product Info -->
+        <div class="flex items-center justify-between mb-2">
+          <h4 class="text-xl font-semibold text-pink-600">{{ prod.product_name }}</h4>
+          {% if prod.product_bestseller %}
+            <span class="bg-yellow-400 text-white text-xs font-bold px-2 py-1 rounded">Best Seller</span>
+          {% endif %}
+        </div>
+
+        <!-- Rating -->
+        <div class="flex items-center text-yellow-400 text-sm mb-2">
+          {% for i in "12345" %}
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 fill-current" viewBox="0 0 24 24">
+              <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.782 1.401 8.172L12 18.896 4.665 23.164 6.066 14.992 0.132 9.21l8.2-1.192z"/>
+            </svg>
+          {% endfor %}
+          <span class="text-gray-500 text-xs ml-2">({{ prod.review_count }} reviews)</span>
+        </div>
+
+        <p class="text-lg font-bold text-gray-800 mb-4">₹{{ prod.product_price }}</p>
+
+        <!-- Add to Cart -->
+        <form method="POST" action="{% url 'add_to_cart' prod.id %}" class="add-to-cart-form" data-product-id="{{ prod.id }}">
+          {% csrf_token %}
+          <input type="hidden" name="quantity" value="1" />
+          <button type="button" class="add-to-cart-btn bg-transparent p-0 border-none">
+            <div class="rounded-full overflow-hidden w-[140px] h-[40px] bg-pink-600 hover:bg-pink-300 transition">
+              <dotlottie-player
+                src="https://lottie.host/5025d273-a701-482a-b41c-5466ef9dbd38/XJUQrz74z5.lottie"
+                background="transparent"
+                speed="1"
+                class="w-50 h-20 lottie-cart"
+              ></dotlottie-player>
+              
+            </div>
+          </button>
+        </form>
+
+        {% if user.is_authenticated and user.is_superuser %}
+          <a href="{% url 'product_delete' prod.id %}" class="mt-3 inline-block bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded-md transition duration-300">Delete</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  
+<script type="module">
+  const cartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+  cartButtons.forEach(btn => {
+    const lottie = btn.querySelector('.lottie-cart');
+    let isPlaying = false;
+  
+    btn.addEventListener('click', () => {
+      if (!isPlaying) {
+        lottie.stop(); // Reset to start
+        lottie.play(); // Play animation
+        isPlaying = true;
+      }
+    });
+  
+    lottie.addEventListener('complete', () => {
+      lottie.stop();    // Reset to first frame after complete
+      isPlaying = false;
+    });
+  });
+</script>
+
+  <script>
+  document.querySelectorAll('.favorite-form').forEach(form => {
+    const button = form.querySelector('.heart-btn');
+    const productId = form.getAttribute('data-id');
+
+    button.addEventListener('click', () => {
+      fetch("{% url 'toggle_favorite' %}", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": form.querySelector('[name=csrfmiddlewaretoken]').value,
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `product_id=${productId}`
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.favorited) {
+          button.querySelector('svg').setAttribute("fill", "red");
+        } else {
+          button.querySelector('svg').setAttribute("fill", "gray");
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".add-to-cart-btn").forEach(button => {
+        button.addEventListener("click", function () {
+            const form = this.closest(".add-to-cart-form");
+            const productId = form.dataset.productId;
+            const csrfToken = form.querySelector("[name=csrfmiddlewaretoken]").value;
+            const quantity = form.querySelector("[name=quantity]").value;
+
+            fetch(`/add-to-cart/${productId}/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": csrfToken
+                },
+                body: `quantity=${quantity}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update cart count & total in header
+                document.getElementById("cartCount").innerText = data.cart_count;
+                document.getElementById("cartTotal").innerText = data.cart_total.toFixed(2);
+
+                // Update dropdown items list
+                const list = document.getElementById("cartItemsList");
+                list.innerHTML = "";
+                data.cart_items.forEach(item => {
+                    const li = document.createElement("li");
+                    li.textContent = `${item.name} - ${item.quantity} x ₹${item.price}`;
+                    list.appendChild(li);
+                });
+
+                // Show dropdown
+                document.getElementById("cartDetails").classList.remove("hidden");
+            })
+            .catch(error => console.error("Add to cart error:", error));
+        });
+    });
+});
+</script>
+
+
+</section>

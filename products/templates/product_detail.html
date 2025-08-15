@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto p-6 bg-white rounded-xl shadow-lg mt-10">
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    
+    <!-- Image Carousel -->
+    <div class="relative">
+      <div class="overflow-hidden rounded-lg">
+        {% for img in product.images.all %}
+          <img 
+            src="{{ img.image.url }}" 
+            data-full="{{ img.image.url }}" 
+            class="product-slide w-full h-96 object-cover cursor-pointer {% if not forloop.first %}hidden{% endif %}">
+        {% endfor %}
+        <!-- Full Image Modal -->
+        <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+          <span id="closeModal" class="absolute top-5 right-8 text-white text-4xl cursor-pointer">&times;</span>
+          <img id="modalImage" src="" class="h-auto w-auto max-h-screen max-w-screen object-contain">
+        </div>
+      </div>
+
+      <!-- Left Arrow -->
+      <button id="prevBtn" 
+              class="absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+        &#10094;
+      </button>
+
+      <!-- Right Arrow -->
+      <button id="nextBtn" 
+              class="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+        &#10095;
+      </button>
+    </div>
+
+    <!-- Product Info -->
+    <div>
+      <h1 class="text-3xl font-bold text-pink-600 mb-2">{{ product.product_name }}</h1>
+      {% if product.product_bestseller %}
+        <span class="inline-block bg-yellow-400 text-white text-sm px-3 py-1 rounded mb-2">Best Seller</span>
+      {% endif %}
+
+      <div class="text-yellow-400 flex mb-3">
+        {% for i in "12345" %}
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+            <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.782 1.401 8.172L12 18.896 4.665 23.164 6.066 14.992 0.132 9.21l8.2-1.192z"/>
+          </svg>
+        {% endfor %}
+      </div>
+
+      <p class="text-lg font-bold text-gray-800 mb-4">₹{{ product.product_price }}</p>
+      <p class="text-gray-600 mb-6">{{ product.product_description }}</p>
+
+       <div id="lottieContainer" data-product-id="{{ product.id }}" class="mt-auto  inline-flex items-center justify-center bg-pink-600 text-white text-lg font-semibold px-6 py-3 rounded-lg cursor-pointer shadow-lg hover:bg-pink-700 hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+          <dotlottie-player 
+            id="clickableLottie"
+            src="https://lottie.host/72fb5a6c-d8ee-45af-bcc7-9e5212681569/1H0FgCQNNe.lottie" 
+            background="transparent" 
+            speed="1.5" 
+            class="w-10 h-10 -ml-2 mr-1">
+          </dotlottie-player>
+          <span>Add to Cart</span>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Image Slider
+  const slides = document.querySelectorAll('.product-slide');
+  let currentSlide = 0;
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    slides[currentSlide].classList.add('hidden');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.remove('hidden');
+  });
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    slides[currentSlide].classList.add('hidden');
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    slides[currentSlide].classList.remove('hidden');
+  });
+
+  // Lottie Animation
+  const player = document.getElementById('clickableLottie');
+  const container = document.getElementById('lottieContainer');
+  let isPlaying = false;
+
+  container.addEventListener('click', () => {
+    if (!isPlaying) {
+      player.stop();
+      player.play();
+      isPlaying = true;
+    }
+  });
+
+  player.addEventListener('complete', () => {
+    player.stop();
+    isPlaying = false;
+  });
+
+  // Image click to popup
+document.querySelectorAll('.product-slide').forEach(img => {
+  img.addEventListener('click', () => {
+    const fullSrc = img.getAttribute('data-full');
+    document.getElementById('modalImage').src = fullSrc;
+    document.getElementById('imageModal').classList.remove('hidden');
+  });
+});
+
+// Close modal
+document.getElementById('closeModal').addEventListener('click', () => {
+  document.getElementById('imageModal').classList.add('hidden');
+});
+
+// Close when clicking outside the image
+document.getElementById('imageModal').addEventListener('click', (e) => {
+  if (e.target.id === 'imageModal') {
+    document.getElementById('imageModal').classList.add('hidden');
+  }
+});
+
+
+</script>
+
+{% endblock %}

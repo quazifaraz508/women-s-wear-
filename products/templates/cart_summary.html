@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+
+<h3 class="text-lg font-semibold mb-2">Cart Summary</h3>
+<ul>
+  {% for item in items %}
+    <li>{{ item.product.name }} × {{ item.quantity }} = ₹{{ item.total_price }}</li>
+  {% endfor %}
+</ul>
+<p class="mt-3 font-bold text-gray-800">Total: ₹{{ total }}</p>
+
+
+
+{% endblock %}
