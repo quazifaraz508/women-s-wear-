@@ -1,0 +1,11 @@
+[phases.setup]
+packages = [
+    "python3",
+    "gcc",
+    "python3-dev",
+    "libmysqlclient-dev",
+    "libjpeg-dev",
+    "zlib1g-dev",
+    "libpng-dev",
+    "build-essential"
+]
