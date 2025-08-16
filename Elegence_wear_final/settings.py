@@ -210,3 +210,5 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+SECURE_SSL_REDIRECT = True
