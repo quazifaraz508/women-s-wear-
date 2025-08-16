@@ -40,14 +40,14 @@
       {% if product.product_bestseller %}
         <span class="inline-block bg-yellow-400 text-white text-sm px-3 py-1 rounded mb-2">Best Seller</span>
       {% endif %}
-
+{% comment %} 
       <div class="text-yellow-400 flex mb-3">
         {% for i in "12345" %}
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 24 24">
             <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.782 1.401 8.172L12 18.896 4.665 23.164 6.066 14.992 0.132 9.21l8.2-1.192z"/>
           </svg>
         {% endfor %}
-      </div>
+      </div> {% endcomment %}
 
       <p class="text-lg font-bold text-gray-800 mb-4">₹{{ product.product_price }}</p>
       <p class="text-gray-600 mb-6">{{ product.product_description }}</p>
