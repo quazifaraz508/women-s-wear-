@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-^k!8s#9l03y6w4)7yw@^dj^lf8bn9g1*(pwk*ai_6fk9p7#&^5
 DEBUG = True
 
 ALLOWED_HOSTS = ['elegancewear-akzrl.sevalla.app']
+CSRF_TRUSTED_ORIGINS = ['https://elegancewear-akzrl.sevalla.app']
 
 
 # Application definition
