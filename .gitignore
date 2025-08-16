@@ -7,7 +7,7 @@ env_womens_wear/
 
 # Django
 *.sqlite3
-/media/
+# /media/
 db.sqlite3
 /staticfiles/  # optional: you can skip pushing this if your server will run collectstatic
 *.log

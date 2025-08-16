@@ -27,5 +27,6 @@ urlpatterns = [
     path('', include('login.urls')),
 
 ]
-if settings.DEBUG:
+
+if settings.DEBUG:  # Serve media only in debug
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
