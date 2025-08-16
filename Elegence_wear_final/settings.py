@@ -211,4 +211,11 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+# Force HTTPS in allauth redirects
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+
+# Ensure CSRF and cookies are secure
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 SECURE_SSL_REDIRECT = True
